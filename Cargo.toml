@@ -1,0 +1,10 @@
+[package]
+name = "bucklespring"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.94"
+input = "0.9.1"
+libc = "0.2.168"
+rodio = "0.20.1"
