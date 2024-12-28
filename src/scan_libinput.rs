@@ -42,7 +42,7 @@ pub fn handle_key_press(stream_handle: Arc<OutputStreamHandle>) -> Result<()> {
                     KeyState::Pressed => 1,
                     KeyState::Released => 0,
                 };
-                super::play(code, state, stream_handle.clone())?;
+                super::play_key_sound(code, state, stream_handle.clone())?;
             }
         }
     }
