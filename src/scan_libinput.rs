@@ -4,7 +4,7 @@ use input::event::keyboard::{KeyState, KeyboardEventTrait};
 use input::{Event, Libinput, LibinputInterface};
 
 use libc::{O_RDONLY, O_RDWR, O_WRONLY};
-use rodio::OutputStreamHandle;
+use rodio::OutputStream;
 
 use std::fs::{File, OpenOptions};
 use std::os::fd::OwnedFd;
@@ -30,7 +30,7 @@ impl LibinputInterface for Interface {
     }
 }
 
-pub fn handle_key(stream_handle: Arc<OutputStreamHandle>) -> Result<()> {
+pub fn handle_key(stream_handle: Arc<OutputStream>) -> Result<()> {
     let mut input = Libinput::new_with_udev(Interface);
     input.udev_assign_seat("seat0").unwrap();
     loop {
@@ -42,7 +42,7 @@ pub fn handle_key(stream_handle: Arc<OutputStreamHandle>) -> Result<()> {
                     KeyState::Pressed => 1,
                     KeyState::Released => 0,
                 };
-                super::play(code, state, stream_handle.clone())?;
+                super::play(code, state, stream_handle.clone());
             }
         }
     }
