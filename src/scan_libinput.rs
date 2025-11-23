@@ -1,5 +1,3 @@
-use anyhow::Result;
-
 use input::event::keyboard::{KeyState, KeyboardEventTrait};
 use input::{Event, Libinput, LibinputInterface};
 
@@ -11,6 +9,8 @@ use std::os::fd::OwnedFd;
 use std::os::unix::fs::OpenOptionsExt;
 use std::path::Path;
 use std::sync::Arc;
+
+use super::Error;
 
 struct Interface;
 
@@ -30,7 +30,7 @@ impl LibinputInterface for Interface {
     }
 }
 
-pub fn handle_key(stream_handle: Arc<OutputStream>) -> Result<()> {
+pub fn handle_key(stream_handle: Arc<OutputStream>) -> Result<(), Error> {
     let mut input = Libinput::new_with_udev(Interface);
     input.udev_assign_seat("seat0").unwrap();
     loop {

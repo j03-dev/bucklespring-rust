@@ -6,6 +6,8 @@ use std::{fs::File, sync::Arc};
 
 const OPT_PATH_AUDIO: &str = "wav";
 
+type Error = Box<dyn std::error::Error>;
+
 fn play(code: u32, press: u32, stream_handle: Arc<OutputStream>) {
     let file_name = format!("{OPT_PATH_AUDIO}/{code:02}-{press:?}.wav");
     if let Ok(file) = File::open(file_name) {
@@ -16,7 +18,7 @@ fn play(code: u32, press: u32, stream_handle: Arc<OutputStream>) {
     }
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+fn main() -> Result<(), Error> {
     let stream_handle = OutputStreamBuilder::open_default_stream()?;
     scan_libinput::handle_key(Arc::new(stream_handle))?;
 
